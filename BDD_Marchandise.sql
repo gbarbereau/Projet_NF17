@@ -1,9 +1,9 @@
 CREATE TABLE Client ( 
 num_client INTEGER PRIMARY KEY,
 nom VARCHAR(20),
-prénom VARCHAR(20),
-e_mail VARCHAR(20),
-telephone INTEGER(20) );
+prenom VARCHAR(20),
+email VARCHAR(20),
+telephone INTEGER );
 
 --pas de méthode en BDD
 
@@ -24,9 +24,9 @@ delai INTEGER,
 restock INTEGER,
 id_m VARCHAR(20) REFERENCES Marchandise(identifiant) );
 
-CREATE TYPE type_jonction AS ENUM (‘Carrefour’,’Intersection’,’Rond-point’);
-
 CREATE TABLE Jonction (
 ID_J INTEGER PRIMARY KEY,
-type type_jonction);
+type VARCHAR REFERENCES type_jonction(typeJ));
 
+CREATE TABLE type_jonction (
+typeJ VARCHAR PRIMARY KEY);
