@@ -19,10 +19,11 @@ etat VARCHAR PRIMARY KEY
 INSERT INTO ETAT_R VALUES ('Normal'),('Bloqué');
 
 CREATE TABLE Liaison (
-nom_r VARCHAR REFERENCES Route(Nom),
-type_r VARCHAR REFERENCES Route(type),
-ID_J INTEGER REFERENCES Jonction(ID_J),
-PRIMARY KEY (nom_r,type_r,ID_J) 
+nom_r VARCHAR,
+type_r VARCHAR,
+id_j INTEGER REFERENCES Jonction(id_j),
+PRIMARY KEY (nom_r,type_r,ID_J),
+FOREIGN KEY (nom_r, type_r) REFERENCES Route (nom, Type)
 );
 
 
