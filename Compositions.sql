@@ -2,7 +2,7 @@ CREATE TABLE Route (
 Nom VARCHAR,
 Type VARCHAR REFERENCES TYPE_R(type),
 Etat VARCHAR REFERENCES ETAT_R(etat),
-(Nom,Type) PRIMARY KEY
+PRIMARY KEY (Nom,Type) 
 );
 
 CREATE TABLE TYPE_R (
@@ -22,7 +22,7 @@ CREATE TABLE Liaison (
 nom_r VARCHAR REFERENCES Route(Nom),
 type_r VARCHAR REFERENCES Route(type),
 ID_J INTEGER REFERENCES Jonction(ID_J),
-(nom_r,type_r,ID_J) PRIMARY KEY
+PRIMARY KEY (nom_r,type_r,ID_J) 
 );
 
 
@@ -30,8 +30,8 @@ CREATE TABLE Numero_Rue (
 num_rue INTEGER,
 nom_route VARCHAR,
 type_route VARCHAR,
-(nom_route,type_route) FOREIGN KEY REFERENCES Route(Nom,Type),
-(num_rue,nom_route,type_route) PRIMARY KEY
+FOREIGN KEY (nom_route,type_route) REFERENCES Route(Nom,Type),
+PRIMARY KEY (num_rue,nom_route,type_route) 
 );
 
 CREATE TABLE Batiment (
@@ -40,8 +40,8 @@ num_rue VARCHAR,
 nom_route VARCHAR,
 type_route VARCHAR,
 digicode VARCHAR,
-(num_rue,nom_route,type_route) FOREIGN KEY REFERENCES Numero_Rue(num_rue,nom_route,type_route),
-(num_bat,num_rue,nom_route,type_route) PRIMARY KEY
+FOREIGN KEY (num_rue,nom_route,type_route) REFERENCES Numero_Rue(num_rue,nom_route,type_route),
+ PRIMARY KEY (num_bat,num_rue,nom_route,type_route)
 );
 
 CREATE TABLE Etage (
@@ -50,8 +50,8 @@ num_bat INTEGER,
 num_rue VARCHAR,
 nom_route VARCHAR,
 type_route VARCHAR,
-(num_bat,num_rue,nom_route,type_route) FOREIGN KEY REFERENCES Batiment(num_bat, num_rue,nom_route,type_route),
-(num_etage,num_bat,num_rue,nom_route,type_route) PRIMARY KEY
+FOREIGN KEY (num_bat,num_rue,nom_route,type_route) REFERENCES Batiment(num_bat, num_rue,nom_route,type_route),
+ PRIMARY KEY (num_etage,num_bat,num_rue,nom_route,type_route)
 );
 
 CREATE TABLE Appartement (
@@ -61,8 +61,8 @@ num_bat INTEGER,
 num_rue VARCHAR,
 nom_route VARCHAR,
 type_route VARCHAR,
-(num_etage,num_bat,num_rue,nom_route,type_route) FOREIGN KEY REFERENCES Etage(num_bat, num_rue,nom_route,type_route),
-(num_appart,num_etage,num_bat,num_rue,nom_route,type_route) PRIMARY KEY
+FOREIGN KEY (num_etage,num_bat,num_rue,nom_route,type_route) REFERENCES Etage(num_bat, num_rue,nom_route,type_route),
+PRIMARY KEY (num_appart,num_etage,num_bat,num_rue,nom_route,type_route) 
 );
 
 CREATE TABLE Habitation (
@@ -73,6 +73,6 @@ num_bat INTEGER,
 num_rue VARCHAR,
 nom_route VARCHAR,
 type_route VARCHAR,
-(num_appart,num_etage,num_bat,num_rue,nom_route,type_route) FOREIGN KEY REFERENCES Appartement(num_appart,num_bat, num_rue,nom_route,type_route),
-(num_client,num_appart,num_etage,num_bat,num_rue,nom_route,type_route) PRIMARY KEY
+FOREIGN KEY (num_appart,num_etage,num_bat,num_rue,nom_route,type_route) REFERENCES Appartement(num_appart,num_bat, num_rue,nom_route,type_route),
+ PRIMARY KEY (num_client,num_appart,num_etage,num_bat,num_rue,nom_route,type_route)
 );
