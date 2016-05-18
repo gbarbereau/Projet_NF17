@@ -74,6 +74,6 @@ num_bat INTEGER,
 num_rue INT,
 nom_route VARCHAR,
 type_route VARCHAR,
-FOREIGN KEY (num_appart,num_etage,num_bat,num_rue,nom_route,type_route) REFERENCES Appartement(num_appart,num_bat, num_rue,nom_route,type_route),
- PRIMARY KEY (num_client,num_appart,num_etage,num_bat,num_rue,nom_route,type_route)
+FOREIGN KEY (num_appart,num_etage,num_bat,num_rue,nom_route,type_route) REFERENCES Appartement(num_appart, num_etage, num_bat, num_rue, nom_route, type_route),
+ PRIMARY KEY (num_client, num_appart, num_etage, num_bat, num_rue, nom_route, type_route)
 );
