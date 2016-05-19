@@ -16,16 +16,23 @@
 	//permet de donner les marchandises qui sont en rupture de stock
 	$vSql=("SELECT identifiant, denomination FROM Marchandise WHERE stock is null");
 	$vQuery=pg_query($vConn, $vSql);
-	$vResult=pg_fetch_array($vQuery);
+	echo "<h1>Marchandises en rupture de stock</h1>";
+	echo "<table border='1' cellspacing='0' >";
+	echo "<tr><th>Identifiant</th><th>Denomination</th></tr>";
 	  while ($vResult = pg_fetch_array($vQuery, null, PGSQL_ASSOC)) {
     echo "<tr>";
     echo "<td>$vResult[identifiant]</td>";
     echo "<td> $vResult[denomination]</td><br/>";
     echo "</tr>";
   }
+  	echo "</table>";
 
   //REQUETE 2
   //gestion du réapprovisionnement
+  	echo "<h4> Avez-vous réapprovisionné une marchandise? </h4>";
+  	echo"<form method='post' action='reapprovisionnement.php'>";
+  	echo "<input type='submit' value='Oui'/>";
+  	echo "</form>";
 ?>
 </p>
 
