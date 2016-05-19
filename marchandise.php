@@ -14,7 +14,18 @@
 
 	//REQUETE 1 : 
 	//permet de donner les marchandises qui sont en rupture de stock
-	$vSql=("SELECT identifiant, denomination FROM Marchandise WHERE stock=NULL");
+	$vSql=("SELECT identifiant, denomination FROM Marchandise WHERE stock is null");
+	$vQuery=pg_query($vConn, $vSql);
+	$vResult=pg_fetch_array($vQuery);
+	  while ($vResult = pg_fetch_array($vQuery, null, PGSQL_ASSOC)) {
+    echo "<tr>";
+    echo "<td>$vResult[identifiant]</td>";
+    echo "<td> $vResult[denomination]</td><br/>";
+    echo "</tr>";
+  }
+
+  //REQUETE 2
+  //gestion du réapprovisionnement
 ?>
 </p>
 
