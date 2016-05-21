@@ -1,29 +1,180 @@
-<!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="utf-8"/>
-
 </head>
 
 <body>
-<center><h1> Livraisons en attentes</h1><br/>
-	<?php
-	include("connexion.php");
-	$query="blabla";
-	$result="blabla";
-	echo"<table><tr><th>ID Commande</th><th>Nom client</th><th>Article</th><th>Quantité</th></tr>";
-	//boucle de lecture
-	//while(){
-	echo"<tr><td></td></tr>";
+<?php
 
-	//}
-echo"</table>";
+include("connexion.php");
+echo "<center>";
+echo "<h1>consultation des livraisons a effectuer</h1><br>";
 
 
-	?>
 
 
-</center>
+if(!empty($_POST['validation']))
+{
+	if (!empty($_POST['refresh'])) {
+		header("Refersh:0");
+	}
+
+	$vTri = $_POST['tri'];
+
+	if ($vTri=="jour") {
+
+		echo "<h3>livraisons triees par jour</h3>";
+
+
+		$vQuery = "SELECT M.date_arri AS dar, C.num_client AS cli, C.nom AS nom, C.prenom AS pre, SUM(M.prix) AS prix_total
+		FROM Client C, Marchandise M
+		WHERE C.num_client=M.num_client
+		GROUP BY C.num_client, M.date_arri;
+		"; 
+
+		$vResult = pg_query($vConn,$vQuery);
+		
+		$vInc=0;
+		echo "<table border='1' class='table' style='width:100%'>";
+		echo "<tr><th> </th><th> Jour </th><th> ID Client </th><th> nom Client </th><th> Prenom Client </th><th> Prix Total </th><th> cliquez pour consulter </th></tr><br>";
+		while ($vRow = pg_fetch_array($vResult, null, PGSQL_ASSOC))
+		{
+			$vInc= $vInc+1;
+			echo "<tr><td>$vInc</td><td>$vRow[dar]</td><td>$vRow[cli]</td><td>$vRow[nom]</td><td>$vRow[pre]</td><td>$vRow[prix_total]</td><td>
+			<form action='livraison.php' method='POST'>
+				<input type='hidden'  name='idc' value=$vRow[cli]>
+				<input type='hidden'  name='dar' value=$vRow[dar]>
+				<input type='hidden'  name='PT' value=$vRow[prix_total]>
+				<input type='hidden'  name='form' value='jour'>
+				</option><input type='submit' value='consulter' name='sub'>
+			</form>
+		</td>
+		</tr>";
+		}
+		echo "</table><br>";
+
+
+	}elseif ($vTri=="cli") {
+
+		echo "<h3>livraisons triees par client</h3>";
+		
+
+		$vQuery = "SELECT C.num_client AS cli , C.nom AS nom , C.prenom AS pre, SUM(M.prix) AS prix_total
+		FROM Client C, Marchandise M
+		WHERE C.num_client=M.num_client
+		GROUP BY C.num_client;
+		"; // pour le detail de la livraison on clique dessus -> et on décrit chaque produit livré, avec le nombre et le prix à l'unité.
+
+		$vResult = pg_query($vConn,$vQuery);
+		
+		$vInc=0;
+		echo "<table border='1' class='table' style='width:100%'>";
+		echo "<tr><th> </th><th>ID Client</th><th>nom Client</th><th>Prenom Client</th><th>Prix Total</th><th>cliquez pour consulter</th></tr><br>";
+		while ($vRow = pg_fetch_array($vResult, null, PGSQL_ASSOC))
+		{
+			$vInc= $vInc+1;
+			echo "<tr><td>$vInc</td><td>$vRow[cli]</td><td>$vRow[nom]</td><td>$vRow[pre]</td><td>$vRow[prix_total]</td><td>
+			<form action='livraison.php' method='POST'>
+				<input type='hidden'  name='idc' value=$vRow[cli]>
+				<input type='hidden'  name='PT' value=$vRow[prix_total]>
+				<input type='hidden'  name='form' value='cli'>
+				</option><input type='submit' value='consulter' name='sub'>
+			</form>
+		</td>
+		</tr>";
+		}
+		echo "</table><br>";
+
+
+	}elseif ($vTri=="mar") {
+
+		echo "<h3>livraisons triees par marchandises</h3>";
+		
+
+		$vQuery = "SELECT M.identifiant AS idm, M.denomination AS denom, COUNT(C.num_client) AS nb_demandeurs
+		FROM Client C, Marchandise M
+		WHERE C.num_client=M.num_client
+		GROUP BY M.identifiant;
+		"; // pour le detail de la livraison on clique dessus -> et on décrit chaque produit livré, avec le nombre et le prix à l'unité.
+
+		$vResult = pg_query($vConn,$vQuery);
+		
+		$vInc=0;
+		echo "<table border='1' class='table' style='width:100%'>";
+		echo "<tr><th>	</th><th>ID Marchandise</th><th>Marchandise</th><th>nombre de demandeurs</th><th>cliquez pour consulter</th></tr><br>";
+		while ($vRow = pg_fetch_array($vResult, null, PGSQL_ASSOC))
+		{
+			$vInc= $vInc+1;
+			echo "<tr><td>$vInc</td><td>$vRow[idm]</td><td>$vRow[denom]</td><td>$vRow[nb_demandeurs]</td><td>
+			<form action='livraison.php' method='POST'>
+				<input type='hidden'  name='idm' value=$vRow[idm]>
+				<input type='hidden'  name='form' value='mar'>
+				</option><input type='submit' value='consulter' name='sub'>
+			</form>
+		</td>
+		</tr>";
+		}
+		echo "</table><br>";
+	}
+	echo " <br><br><form action='liste_commande.php'  method='POST'>";
+	echo '<input type="submit" value="retour arriere" name="refresh"><br><br><br>';
+	echo "</form><br>";
+
+	// pour le detail de la livraison on clique dessus -> et on décrit chaque produit livré, avec le nombre et le prix à l'unité.
+	//a ordonner
+
+
+}
+else
+{
+
+
+	echo '<form action="liste_commande.php"  method="POST">
+		choisissez le type de tri que vous souhaitez appliquer: 
+		<select name="tri" > <br>
+			<option value ="jour">tri par jour</option>
+			<option value ="cli">par clients</option>
+			<option value ="mar">par marchandises</option>
+		</select><br>
+		<input type="submit" value="consulter" name="validation"><br><br><br>
+		</form>';
+	
+
+	echo "<h3>affichage de base:</h3><br>";
+
+	$vQuery = "SELECT C.num_client AS cli , C.nom AS nom , C.prenom AS pre, SUM(M.prix) AS prix_total, M.date_arri AS dar, M.Heure_arri AS har
+	FROM Client C, Marchandise M
+	WHERE C.num_client=M.num_client
+	GROUP BY C.num_client, M.date_arri, M.Heure_arri
+	ORDER BY M.date_arri, M.Heure_arri;
+	"; // pour le detail de la livraison on clique dessus -> et on décrit chaque produit livré, avec le nombre et le prix à l'unité.
+
+	$vResult = pg_query($vConn,$vQuery);
+	
+	$vInc=0;
+	echo "<table border='1' class='table' style='width:100%'>";
+	echo "<tr><th> </th><th>ID Client</th><th>nom Client</th><th>Prenom Client</th><th>Prix Total</th><th>cliquez pour consulter</th></tr><br>";
+	while ($vRow = pg_fetch_array($vResult, null, PGSQL_ASSOC))
+	{
+		$vInc= $vInc+1;
+		echo "<tr><td>$vInc</td><td>$vRow[cli]</td><td>$vRow[nom]</td><td>$vRow[pre]</td><td>$vRow[prix_total]</td>
+		<td>
+			<form action='livraison.php' method='POST'>
+				<input type='hidden'  name='idc' value=$vRow[cli]>
+				<input type='hidden'  name='dar' value=$vRow[dar]>
+				<input type='hidden'  name='har' value=$vRow[har]>
+				<input type='hidden'  name='PT' value=$vRow[prix_total]>
+				<input type='hidden'  name='form' value='base'>
+				</option><input type='submit' value='consulter' name='sub'>
+			</form>
+		</td>
+		</tr>";
+	}
+	echo "</table><br>";
+
+}
+pg_close($vConn);
+
+echo "</center>";
+?>
 </body>
-
 </html>
