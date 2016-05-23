@@ -12,11 +12,15 @@ identifiant VARCHAR(20) PRIMARY KEY,
 denomination VARCHAR(20),
 prix INTEGER,
 stock INTEGER,
-date_poss DATE,
-heure_poss INTEGER,
 date_arri DATE,
 heure_arri INTEGER,
 num_client INTEGER NOT NULL REFERENCES Client(num_client) );
+
+CREATE TABLE Livraison (
+num_client INTEGER PRIMARY KEY REFERENCES Client(num_client),
+date_poss DATE,
+heure_poss INTEGER
+);
 
 CREATE TABLE Reapprovisionnement (
 reference VARCHAR(20) PRIMARY KEY,
