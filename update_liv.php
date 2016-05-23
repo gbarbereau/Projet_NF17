@@ -30,7 +30,7 @@
 	};
 	?>
 	</table>
-	<form method="post" action="traitement_commande.php">
+	<form method="post" action="update_liv_action.php">
 
 	Quand est-elle arrivée ?
 	<label for="date">Date</label> : <INPUT type="date" name="date"></code>	
