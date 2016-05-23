@@ -9,9 +9,9 @@
 <center><h1> Listes Clients</h1><br/>
 	<?php
 	include("connexion.php");
-	$query="SELECT num_client,nom,prenom FROM Client ORDER BY nom,prenom";
+	$query="SELECT num_client,nom,prenom FROM Client ORDER BY num_client";
 	$result=pg_query($vConn,$query);
-	echo"<table><tr><th>ID Client </th><th> Nom </th><th>Prénom</th></tr>";
+	echo"<table><tr><th><center>ID Client </center></th><th><center> Nom </center></th><th><center>Prénom</center></th></tr>";
 	//boucle de lecture
 	while ($array = pg_fetch_array($result)) {
 	echo"<tr><td>$array[num_client]</td><td>$array[nom]</td><td>$array[prenom]</td>";

@@ -13,16 +13,22 @@ $vMail = $_POST['mail'];
 $vTel = $_POST['tel'];
 
 echo"test";
-$vNom = strtoupper ($vNom);
-$vPrenom = strtoupper ($vPrenom);
+$vNom = strtolower($vNom);
+$vPrenom = strtolower($vPrenom);
+$vNom = ucfirst($vNom);
+$vPrenom = ucfirst($vPrenom);
 
 // aucune sécurité pas vrai ? 
-$vQuery = "SELECT MAX(num_client) FROM tClient";
-$vResult = mysqli_query($connect, $query);
-$vNum = $vResult+1;
+$vQuery = "SELECT MAX(num_client) FROM Client";
+$vResult = pg_query($vConn, $vQuery);
 
-$vQuery = "INSERT INTO tClients VALUES ($vNum, '$vNom', '$vPrenom', '$vMail', '$vTel' )";
-$vResult = mysqli_query($connect, $query);
+$vResult = pg_fetch_array($vResult);
+
+$vNum = $vResult[0]+1;
+
+
+$vQuery = "INSERT INTO Client VALUES ($vNum, '$vNom', '$vPrenom', '$vMail', '$vTel' )";
+$vResult = pg_query($vConn, $vQuery);
 
 pg_close($vConn);
 
