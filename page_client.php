@@ -7,6 +7,9 @@
 
 <body>
 <?php
+	date_default_timezone_set('Europe/Paris');
+		$date = date("Y/m/j");
+		
 	$ID_client=$_GET['ID'];
 	include("connexion.php");
 	$query="SELECT num_client,nom,prenom,email,telephone FROM Client WHERE num_client=$ID_client ";
@@ -29,7 +32,7 @@ echo"<center><h1> Page de $array[nom] $array[prenom]</h1><br/>";
 	echo"</table>";
 	//requete pour les livraisons
 
-	$query3="SELECT * FROM Client INNER JOIN Marchandise ON Client.num_client=Marchandise.num_client WHERE CLient.num_client=$ID_client ORDER BY date_poss";
+	$query3="SELECT * FROM Marchandise INNER JOIN Livraison ON Marchandise.num_client=Livraison.num_client WHERE Marchandise.num_client=$ID_client ORDER BY date_poss";
 	$result3=pg_query($vConn,$query3);
 	echo"Historiques des commandes du client:<br/>"."\n";
 	$array3 = pg_fetch_array($result3);
@@ -37,11 +40,15 @@ echo"<center><h1> Page de $array[nom] $array[prenom]</h1><br/>";
 			echo "Le client n'as jamais rien commandé";
 			exit;
 		} else {
-			echo"<table><tr><th>ID commande</th><th>Marchandise</th><th>A voir pour les autre colonnes.....</th></tr>";
+			echo"<table border='1px solid red' ><tr><th>ID commande</th><th>Marchandise</th><th>Prix</th><th>Date Arrivée</th></tr>";
 			while ($array3 = pg_fetch_array($result3)){
 		
 		
-				echo"<table><tr><td>$array3[identifiant]</td><td>$array3[denomination]</td></tr>";
+				echo"<table><tr><td>$array3[identifiant]</td><td>$array3[denomination]</td><td>$array3[prix]</td><td>";
+				if ($array3['date_arri']<$date) echo"$array3[date_arri]";
+				else echo"arrivé prévu le: $array3[date_poss]";
+
+				echo"</td></tr>";
 
 
 			} 
