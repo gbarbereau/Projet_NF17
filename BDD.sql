@@ -15,6 +15,7 @@ INSERT INTO TYPE_R VALUES ('Boulevard'),('Route'),('Rue'),('Avenue');
 CREATE TABLE ETAT_R (
 etat VARCHAR PRIMARY KEY
 );
+
 --Enumeration de etat
 INSERT INTO ETAT_R VALUES ('Normal'),('Bloqué');
 
