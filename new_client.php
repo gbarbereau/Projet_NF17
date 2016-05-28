@@ -49,6 +49,7 @@ while ($vResult3 = pg_fetch_array($vSQL))
 }
 
 echo '</SELECT>';
+
 echo "<INPUT TYPE='hidden' NAME='type_r' VALUE='$type_r'>";
 echo "<INPUT TYPE='hidden' NAME='nom_r' VALUE='$nom_r'>";
 echo "<INPUT TYPE='hidden' NAME='num' VALUE='$vNum'>";
