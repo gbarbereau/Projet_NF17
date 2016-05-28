@@ -25,7 +25,7 @@ switch ($_POST['form']) {
 
 		echo "<h2> Commande du client: $vIdc
 			prevue pour le: $vDar
-			a: $vHar </h2>";
+			a: $vHar h</h2>";
 
 
 		$vQuery = "SELECT num_client AS idcli, nom, prenom AS pre, email, telephone AS tel 
@@ -55,11 +55,12 @@ switch ($_POST['form']) {
 		</h4>
 		";
 		$vQuery = "SELECT M.identifiant AS idm, M.denomination AS den, M.prix AS pri, M.stock AS sto
-		FROM Client C, Marchandise M
+		FROM Client C, Marchandise M, Livraison L
 		WHERE C.num_client=M.num_client
+		AND L.num_client=M.num_client
 		AND C.num_client=$vIdc
-		AND M.date_arri='$vDar'
-		AND M.Heure_arri=$vHar
+		AND L.date_poss='$vDar'
+		AND L.Heure_poss=$vHar
 		GROUP BY M.identifiant
 		"; 
 		// si y'a plusieurs fois la meme marchandise pour un meme client a la meme date, il serait bien des les compter, comment faire ? 
@@ -116,12 +117,13 @@ switch ($_POST['form']) {
 		";
 		//CAST ($vDar AS DATE);
 		$vQuery = "SELECT M.identifiant AS idm, M.denomination AS den, M.prix AS pri, M.stock AS sto
-		FROM Client C, Marchandise M
+		FROM Client C, Marchandise M, Livraison L
 		WHERE C.num_client=M.num_client
+		AND L.num_client=M.num_client
 		AND C.num_client=$vIdc
-		AND M.date_arri='$vDar'
-		GROUP BY M.identifiant
-		ORDER BY M.Heure_arri;
+		AND L.date_poss='$vDar'
+		GROUP BY M.identifiant, L.heure_poss
+		ORDER BY L.heure_poss;
 		"; 
 		// si y'a plusieurs fois la meme marchandise pour un meme client a la meme date, il serait bien des les compter, comment faire ? 
 
@@ -149,7 +151,7 @@ switch ($_POST['form']) {
 			a: $vHar </h2>";
 
 
-		$vQuery = "SELECT num_client AS idcli, nom, prenom AS pre, email, telephone AS tel 
+		$vQuery = "SELECT num_client AS idcli, nom AS nom, prenom AS pre, email, telephone AS tel 
 		FROM Client 
 		WHERE num_client=$vIdc;
 		";
@@ -203,12 +205,11 @@ switch ($_POST['form']) {
 		$vIdm=$_POST['idm'];
 
 
-		echo "<h2> Commande de la marchandise: $vIdm";
+		echo "<h2> Commande de la marchandise: $vIdm </h2>";
 
 
-		$vQuery = "SELECT identifiant AS idm, denomination AS denom, prix AS pri, stock AS sto, date_poss AS dcom, heure_poss AS hcom, date_arri AS darr, heure_arri AS harr, 
-		num_client AS idc
-		FROM Marchandise 
+		$vQuery = "SELECT M.identifiant AS idm, M.denomination AS denom, M.prix AS pri, M.stock AS sto, L.date_poss AS dcom, L.heure_poss AS hcom , M.num_client AS idc
+		FROM Marchandise M, Livraison L
 		WHERE identifiant='$vIdm';
 		";
 
@@ -222,10 +223,8 @@ switch ($_POST['form']) {
 			<b>marchandise:</b> $vRow[denom]	<br>
 			<b>prix unite:</b> $vRow[pri]	<br>
 			<b>nombre en stock:</b> $vRow[sto]	<br>
-			<b>date de la commande:</b> $vRow[dcom]	<br>
-			<b>heure de la commande:</b> $vRow[hcom]	<br>
-			<b>date de la livraison:</b> $vRow[darr]	<br>
-			<b>heure de la livraison:</b> $vRow[harr]	<br>
+			<b>date de la livraison:</b> $vRow[dcom]	<br>
+			<b>heure de la livraison:</b> $vRow[hcom]	<br>
 			";
 		
 

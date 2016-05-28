@@ -25,11 +25,13 @@ if(!empty($_POST['validation']))
 		echo "<h3>livraisons triees par jour</h3>";
 
 
-		$vQuery = "SELECT M.date_arri AS dar, C.num_client AS cli, C.nom AS nom, C.prenom AS pre, SUM(M.prix) AS prix_total
-		FROM Client C, Marchandise M
+		$vQuery = "SELECT L.date_poss AS dar, C.num_client AS cli, C.nom AS nom, C.prenom AS pre, SUM(M.prix) AS prix_total
+		FROM Client C, Marchandise M, Livraison L
 		WHERE C.num_client=M.num_client
-		GROUP BY C.num_client, M.date_arri;
-		"; 
+		AND L.num_client=M.num_client
+		GROUP BY L.date_poss, C.num_client
+		ORDER BY L.date_poss, C.num_client;
+		";
 
 		$vResult = pg_query($vConn,$vQuery);
 		
@@ -61,7 +63,8 @@ if(!empty($_POST['validation']))
 		$vQuery = "SELECT C.num_client AS cli , C.nom AS nom , C.prenom AS pre, SUM(M.prix) AS prix_total
 		FROM Client C, Marchandise M
 		WHERE C.num_client=M.num_client
-		GROUP BY C.num_client;
+		GROUP BY C.num_client
+		ORDER BY C.num_client;
 		"; // pour le detail de la livraison on clique dessus -> et on décrit chaque produit livré, avec le nombre et le prix à l'unité.
 
 		$vResult = pg_query($vConn,$vQuery);
@@ -93,7 +96,8 @@ if(!empty($_POST['validation']))
 		$vQuery = "SELECT M.identifiant AS idm, M.denomination AS denom, COUNT(C.num_client) AS nb_demandeurs
 		FROM Client C, Marchandise M
 		WHERE C.num_client=M.num_client
-		GROUP BY M.identifiant;
+		GROUP BY M.identifiant
+		ORDER BY M.identifiant;
 		"; // pour le detail de la livraison on clique dessus -> et on décrit chaque produit livré, avec le nombre et le prix à l'unité.
 
 		$vResult = pg_query($vConn,$vQuery);
@@ -141,11 +145,12 @@ else
 
 	echo "<h3>affichage de base:</h3><br>";
 
-	$vQuery = "SELECT C.num_client AS cli , C.nom AS nom , C.prenom AS pre, SUM(M.prix) AS prix_total, M.date_arri AS dar, M.Heure_arri AS har
-	FROM Client C, Marchandise M
+	$vQuery = "SELECT C.num_client AS cli , C.nom AS nom , C.prenom AS pre, SUM(M.prix) AS prix_total, L.date_poss AS dar, L.heure_poss AS har
+	FROM Client C, Marchandise M, Livraison L
 	WHERE C.num_client=M.num_client
-	GROUP BY C.num_client, M.date_arri, M.Heure_arri
-	ORDER BY M.date_arri, M.Heure_arri;
+	AND L.num_client=M.num_client
+	GROUP BY C.num_client, L.date_poss, L.heure_poss
+	ORDER BY L.date_poss, L.heure_poss, C.num_client;
 	"; // pour le detail de la livraison on clique dessus -> et on décrit chaque produit livré, avec le nombre et le prix à l'unité.
 
 	$vResult = pg_query($vConn,$vQuery);
