@@ -53,7 +53,7 @@ echo"<center><h1> Page de $array[nom] $array[prenom]</h1><br/>";
 
 			} 
 			echo"</table>";
-			echo "faut faire un if date()>date poss ou date arriv je sais pas j'ai pas compris alors état = livré ";
+		
 		}
 	
 
