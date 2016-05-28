@@ -41,7 +41,7 @@ $vSQL = pg_query($vConn,$vQuery3);
 
 
 echo 'Quel est votre numéro de rue ?';
-echo '<form method ="post" action = "new_client_next.php">';
+echo '<form method ="post" action = "new_client_batiment.php">';
 echo'Numéro de rue : <SELECT name="num_rue" size="1">';
 while ($vResult3 = pg_fetch_array($vSQL))
 {

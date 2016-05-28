@@ -65,3 +65,4 @@ echo"<center><h1> Page de $array[nom] $array[prenom]</h1><br/>";
 </body>
 
 </html>
+

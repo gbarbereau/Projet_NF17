@@ -5,13 +5,7 @@
 <a href='marchandise.php'> &lsaquo; Retour à la page marchandise</a>
 </p>
 <?php
-		//connexion
-	$vHost = "tuxa.sme.utc";
-	$vPort = "5432" ;
-	$vData = "dbnf17p114";
-	$vUser = "nf17p114";
-	$vPass = "SVYhc0nK";
-	$vConn=pg_connect("host=$vHost port=$vPort dbname=$vData user=$vUser password=$vPass");
+	include 'connexion.php';
 
 		// traitement modification stock de certaines marchandises
 	$vReference=$_POST['ref'];
