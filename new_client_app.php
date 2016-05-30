@@ -3,8 +3,6 @@
 <title>Creation client</title>
 </head>
 <body>
-	Bienvenue sur la page de creation de client !
-
 
 
 <?php
@@ -28,13 +26,13 @@
 		{
 			echo '<OPTION>',$vResult[0],'</OPTION>';
 		}
+		echo '</SELECT>';
 		echo "<INPUT TYPE='hidden' NAME='num_etage' VALUE='$num_etage'>";				
 		echo "<INPUT TYPE='hidden' NAME='num_bat' VALUE='$num_bat'>";		
 		echo "<INPUT TYPE='hidden' NAME='num_rue' VALUE='$num_rue'>";
 		echo "<INPUT TYPE='hidden' NAME='type_r' VALUE='$type_r'>";
 		echo "<INPUT TYPE='hidden' NAME='nom_r' VALUE='$nom_r'>";
 		echo "<INPUT TYPE='hidden' NAME='num' VALUE='$vNum'>";		
-		echo '</SELECT>';
 		echo'<input type="submit" value="ajouter" name="validation"><br><br><br>';
 	echo'</form>';
 	pg_close($vConn);

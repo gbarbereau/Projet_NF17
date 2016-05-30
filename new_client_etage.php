@@ -3,7 +3,6 @@
 <title>Creation client</title>
 </head>
 <body>
-	Bienvenue sur la page de creation de client !
 
 
 
@@ -18,7 +17,7 @@
 
 	$vQuery = pg_query($vConn,$vSql);
 
-	echo 'Dans quel batiment habitez vous ?';
+	echo 'A quel étage habitez-vous ?<br>';
 
 	echo '<form method ="post" action = "new_client_app.php">';
 		echo'Numéro de létage : <SELECT name="num_etage" size="1">';

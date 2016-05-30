@@ -3,7 +3,6 @@
 <title>Creation client</title>
 </head>
 <body>
-	Bienvenue sur la page de creation de client !
 
 
 
@@ -13,15 +12,11 @@
 	$nom_r = $_POST['nom_r'];
 	$num_rue=$_POST['num_rue'];
 	$vNum=$_POST['num'];
-	echo $type_r.'<BR>';
-	echo $nom_r.'<BR>';
-	echo $num_rue.'<BR>';
-
 	$vSql = "SELECT num_bat FROM Batiment WHERE num_rue='$num_rue' AND nom_route='$nom_r' AND type_route = '$type_r' ORDER BY num_bat";
 
 	$vQuery = pg_query($vConn,$vSql);
 
-	echo 'Dans quel batiment habitez vous ?';
+	echo 'Dans quel batiment habitez vous ?<br>';
 
 	echo '<form method ="post" action = "new_client_etage.php">';
 		echo'Numéro de batiment : <SELECT name="num_batiment" size="1">';

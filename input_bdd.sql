@@ -130,3 +130,71 @@ INSERT INTO Livraison VALUES ('000003','08/06/2016','04');
 INSERT INTO Livraison VALUES ('000002','09/06/2016','05');
 INSERT INTO Livraison VALUES ('779966','10/06/2016','06');
 INSERT INTO Livraison VALUES ('999999','11/06/2016','07');
+
+/* ------------------------------------------------------------------------------------------------------------ */
+
+
+INSERT INTO Route VALUES ('Marjolet', 'Boulevard', 'Normal');
+INSERT INTO Route VALUES ('Dadant','Rue', 'Bloqué');
+
+INSERT INTO Numero_Rue VALUES ('396', 'Marjolet', 'Boulevard');
+INSERT INTO Numero_Rue VALUES ('69', 'Marjolet', 'Boulevard');
+INSERT INTO Numero_Rue VALUES ('32', 'Dadant', 'Rue');
+
+INSERT INTO Batiment VALUES ('0','32', 'Dadant', 'Rue',NULL);
+INSERT INTO Batiment VALUES ('1','32', 'Dadant', 'Rue', '0000');
+INSERT INTO Batiment VALUES ('2', '69', 'Marjolet', 'Boulevard','0001');
+INSERT INTO Batiment VALUES ('1', '396', 'Marjolet', 'Boulevard', '4545');
+
+INSERT INTO Etage VALUES ('0','1', '396', 'Marjolet', 'Boulevard');
+INSERT INTO Etage VALUES ('1','1','396', 'Marjolet', 'Boulevard');
+INSERT INTO Etage VALUES ('2','1','396', 'Marjolet', 'Boulevard');
+INSERT INTO Etage VALUES ('4','2','69', 'Marjolet', 'Boulevard');
+INSERT INTO Etage VALUES ('12','2','69', 'Marjolet', 'Boulevard');
+INSERT INTO Etage VALUES ('0','0', '32', 'Dadant', 'Rue');
+INSERT INTO Etage VALUES ('1','1', '32', 'Dadant', 'Rue');
+INSERT INTO Etage VALUES ('2','1', '32', 'Dadant', 'Rue');
+
+
+INSERT INTO Appartement VALUES ('1','0','1', '396', 'Marjolet', 'Boulevard');
+INSERT INTO Appartement VALUES ('2','1','1','396', 'Marjolet', 'Boulevard');
+INSERT INTO Appartement VALUES ('34','2','1','396', 'Marjolet', 'Boulevard');
+INSERT INTO Appartement VALUES ('50','4','2','69', 'Marjolet', 'Boulevard');
+INSERT INTO Appartement VALUES ('23','12','2','69', 'Marjolet', 'Boulevard');
+INSERT INTO Appartement VALUES ('12','0','0', '32', 'Dadant', 'Rue');
+INSERT INTO Appartement VALUES ('71','1','1', '32', 'Dadant', 'Rue');
+INSERT INTO Appartement VALUES ('9','2','1', '32', 'Dadant', 'Rue');
+
+INSERT INTO Habitation VALUES ('100000','1','0','1', '396', 'Marjolet', 'Boulevard');
+INSERT INTO Habitation VALUES ('120000','2','1','1','396', 'Marjolet', 'Boulevard');
+INSERT INTO Habitation VALUES ('123000','34','2','1','396', 'Marjolet', 'Boulevard');
+INSERT INTO Habitation VALUES ('123400','50','4','2','69', 'Marjolet', 'Boulevard');
+INSERT INTO Habitation VALUES ('123450','23','12','2','69', 'Marjolet', 'Boulevard');
+INSERT INTO Habitation VALUES ('123456','12','0','0', '32', 'Dadant', 'Rue');
+INSERT INTO Habitation VALUES ('123457','71','1','1', '32', 'Dadant', 'Rue');
+INSERT INTO Habitation VALUES ('123458','9','2','1', '32', 'Dadant', 'Rue');
+
+INSERT INTO Client VALUES ('100000','Troijour','Adam','atroi@gogole.com','0234655782');
+INSERT INTO Client VALUES ('120000','Gator','Ali','ali@gator.fr','0111111111');
+INSERT INTO Client VALUES ('123000', 'Payesurlechant', 'Amanda', 'ampa@youhou.net','0132547546');
+INSERT INTO Client VALUES ('123400','Tonpopulaire', 'Dick','dick@ina.box','0606060606');
+INSERT INTO Client VALUES ('123450', 'Enbave','Yvon','yvon@coldmail.fr','0123456789');
+INSERT INTO Client VALUES ('123456','Meurdesoif','Jean', 'jm@inlook.fr',NULL);
+INSERT INTO Client VALUES ('123457','Defesse','Ray','humour@gogole.com','0234343434');
+INSERT INTO Client VALUES ('123458','Balmasque','Hugo','hugo@inmail.com','0235343434');
+
+INSERT INTO Marchandise VALUES ('18','USB32','12','100',NULL,NULL,'100000');
+INSERT INTO Marchandise VALUES ('19','Amour','9999','500',NULL,NULL,'120000');
+INSERT INTO Marchandise VALUES ('20','Ordinateur','532','200',NULL,NULL,'123400');
+INSERT INTO Marchandise VALUES ('21','SGBD','100',0,NULL,NULL,'123456');
+INSERT INTO Marchandise VALUES ('22','Perruque','10','111',NULL,NULL,'123458');
+INSERT INTO Marchandise VALUES ('23','huile','2',0,NULL,NULL,'123000');
+INSERT INTO Marchandise VALUES ('24','farine','1234','2',NULL,NULL,'123457');
+
+INSERT INTO Livraison VALUES ('100000','05/07/2016','12');
+INSERT INTO Livraison VALUES ('120000','06/07/2016','14');
+INSERT INTO Livraison VALUES ('123400','07/07/2016','11');
+INSERT INTO Livraison VALUES ('123456','08/07/2016','9');
+INSERT INTO Livraison VALUES ('123450','09/07/2016','13');
+INSERT INTO Livraison VALUES ('123457','10/07/2016','14');
+INSERT INTO Livraison VALUES ('123458','11/07/2016','12');
