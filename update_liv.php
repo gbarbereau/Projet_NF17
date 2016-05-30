@@ -36,7 +36,7 @@
 
 	Quand est-elle arrivée ?</br>
 	<label for="date">Date</label> : <INPUT type="date" name="date"></code>	</br>
-	<label for="heure">Heure</label> : <INPUT type="time" name="heure"></code></br>
+	<label for="heure">Heure</label> : <INPUT type="text" name="heure"></code></br>
 	<label for="code">Code</label> : <INPUT type="text" name="code" size="50"></br>
 	<label for="heure">Quantité livrée</label> : <INPUT type="text" name="qte"></br></code></br>
 	<INPUT TYPE="submit" NAME="nom" VALUE=" Envoyer ">
