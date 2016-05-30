@@ -23,9 +23,9 @@
 		$vSQL = 'SELECT * FROM TYPE_R';
 		$vQuery2 = pg_query($vConn,$vSQL);
 		echo"<center><h1>Ajout d'une route</h1></center>";
-		echo "<table>"
+		echo "<table>";
 		echo'<form method ="post" action = "new_road.php">';
-		echo'<tr><td>Type de rue :</td><td><SELECT name="type_r" size="1"></td></tr>';
+		echo'Type de rue :<SELECT name="type_r" size="1">';
 
 		while ($vResult2 = pg_fetch_array($vQuery2))
 		{
@@ -35,7 +35,7 @@
 		echo '</SELECT>';
 		echo'<tr><td>Nom de la rue : </td><td><input type="text" name="nom_r"></td></tr>';
 		echo'<tr><td><input type="submit" value="ajouter" name="validation"></td></tr>';
-		echo "<table>"
+		echo "<table>";
 		echo'</form>';
 
 	}
