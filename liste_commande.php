@@ -14,6 +14,45 @@ echo "<h1>consultation des livraisons a effectuer</h1><br>";
 
 if(!empty($_POST['validation']))
 {
+
+
+	if ($_POST['validation']=="consulter livraisons du jour") 
+	{
+
+		$vQuery = "SELECT C.num_client AS cli , C.nom AS nom , C.prenom AS pre, SUM(M.prix) AS prix_total, L.heure_poss AS har
+		FROM Client C, Marchandise M, Livraison L
+		WHERE C.num_client=M.num_client
+		AND L.num_client=M.num_client
+		AND L.date_poss='NOW()'
+		GROUP BY C.num_client,L.heure_poss
+		ORDER BY L.heure_poss, C.num_client;
+		";
+
+		$vResult = pg_query($vConn,$vQuery);
+		
+		$vInc=0;
+		echo "<table border='1' class='table' style='width:100%'>";
+		echo "<tr><th> </th><th>ID Client</th><th>nom Client</th><th>Prenom Client</th><th>Prix Total</th><th>cliquez pour consulter</th></tr><br>";
+		while ($vRow = pg_fetch_array($vResult, null, PGSQL_ASSOC))
+		{
+			$vInc= $vInc+1;
+			echo "<tr><td>$vInc</td><td>$vRow[cli]</td><td>$vRow[nom]</td><td>$vRow[pre]</td><td>$vRow[prix_total]</td>
+			<td>
+				<form action='livraison.php' method='POST'>
+					<input type='hidden'  name='idc' value=$vRow[cli]>
+					<input type='hidden'  name='dar' value=$vRow[dar]>
+					<input type='hidden'  name='har' value=$vRow[har]>
+					<input type='hidden'  name='PT' value=$vRow[prix_total]>
+					<input type='hidden'  name='form' value='base'>
+					</option><input type='submit' value='consulter' name='sub'>
+				</form>
+			</td>
+			</tr>";
+		}
+		echo "</table><br>";
+	}
+
+
 	if (!empty($_POST['refresh'])) {
 		header("Refersh:0");
 	}
@@ -25,11 +64,13 @@ if(!empty($_POST['validation']))
 		echo "<h3>livraisons triees par jour</h3>";
 
 
-		$vQuery = "SELECT M.date_arri AS dar, C.num_client AS cli, C.nom AS nom, C.prenom AS pre, SUM(M.prix) AS prix_total
-		FROM Client C, Marchandise M
+		$vQuery = "SELECT L.date_poss AS dar, C.num_client AS cli, C.nom AS nom, C.prenom AS pre, SUM(M.prix) AS prix_total
+		FROM Client C, Marchandise M, Livraison L
 		WHERE C.num_client=M.num_client
-		GROUP BY C.num_client, M.date_arri;
-		"; 
+		AND L.num_client=M.num_client
+		GROUP BY L.date_poss, C.num_client
+		ORDER BY L.date_poss, C.num_client;
+		";
 
 		$vResult = pg_query($vConn,$vQuery);
 		
@@ -61,8 +102,9 @@ if(!empty($_POST['validation']))
 		$vQuery = "SELECT C.num_client AS cli , C.nom AS nom , C.prenom AS pre, SUM(M.prix) AS prix_total
 		FROM Client C, Marchandise M
 		WHERE C.num_client=M.num_client
-		GROUP BY C.num_client;
-		"; // pour le detail de la livraison on clique dessus -> et on décrit chaque produit livré, avec le nombre et le prix à l'unité.
+		GROUP BY C.num_client
+		ORDER BY C.num_client;
+		";
 
 		$vResult = pg_query($vConn,$vQuery);
 		
@@ -93,8 +135,9 @@ if(!empty($_POST['validation']))
 		$vQuery = "SELECT M.identifiant AS idm, M.denomination AS denom, COUNT(C.num_client) AS nb_demandeurs
 		FROM Client C, Marchandise M
 		WHERE C.num_client=M.num_client
-		GROUP BY M.identifiant;
-		"; // pour le detail de la livraison on clique dessus -> et on décrit chaque produit livré, avec le nombre et le prix à l'unité.
+		GROUP BY M.identifiant
+		ORDER BY M.identifiant;
+		";
 
 		$vResult = pg_query($vConn,$vQuery);
 		
@@ -119,13 +162,42 @@ if(!empty($_POST['validation']))
 	echo '<input type="submit" value="retour arriere" name="refresh"><br><br><br>';
 	echo "</form><br>";
 
-	// pour le detail de la livraison on clique dessus -> et on décrit chaque produit livré, avec le nombre et le prix à l'unité.
-	//a ordonner
 
 
 }
 else
 {
+
+	echo "<h3>Livraisons a effectuer ajourd'hui</h3><br>";
+
+	$vQuery = "SELECT M.identifiant AS idm, COUNT(M.identifiant) AS NbLiv
+	FROM Marchandise M, Livraison L
+	WHERE L.num_client=M.num_client
+	AND L.date_poss='NOW()'
+	GROUP BY M.identifiant;
+	";
+
+	$vResult = pg_query($vConn,$vQuery);
+	while ($vRow = pg_fetch_array($vResult, null, PGSQL_ASSOC))
+	{
+		echo " PUTAIN ! $vRow[NbLiv] LA !<br>";
+		$vNbLiv=$vRow[NbLiv];
+
+		
+	}
+	if ($vNbLiv=="lol")
+	{
+		echo "<br>pas de commandes a livrer aujourd'hui =) <br><br><br>";
+	}
+	else 
+	{
+		echo "<br>nombre de livraisons a effectuer aujourd'hui: $vNbLiv <br><br>";
+		echo '<form action="liste_commande.php"  method="POST">
+		consultez les ! <br>
+		<input type="submit" value="consulter livraisons du jour" name="validation"><br><br><br>
+		</form>';
+	}
+
 
 
 	echo '<form action="liste_commande.php"  method="POST">
@@ -141,12 +213,13 @@ else
 
 	echo "<h3>affichage de base:</h3><br>";
 
-	$vQuery = "SELECT C.num_client AS cli , C.nom AS nom , C.prenom AS pre, SUM(M.prix) AS prix_total, M.date_arri AS dar, M.Heure_arri AS har
-	FROM Client C, Marchandise M
+	$vQuery = "SELECT C.num_client AS cli , C.nom AS nom , C.prenom AS pre, SUM(M.prix) AS prix_total, L.date_poss AS dar, L.heure_poss AS har
+	FROM Client C, Marchandise M, Livraison L
 	WHERE C.num_client=M.num_client
-	GROUP BY C.num_client, M.date_arri, M.Heure_arri
-	ORDER BY M.date_arri, M.Heure_arri;
-	"; // pour le detail de la livraison on clique dessus -> et on décrit chaque produit livré, avec le nombre et le prix à l'unité.
+	AND L.num_client=M.num_client
+	GROUP BY C.num_client, L.date_poss, L.heure_poss
+	ORDER BY L.date_poss, L.heure_poss, C.num_client;
+	";
 
 	$vResult = pg_query($vConn,$vQuery);
 	
