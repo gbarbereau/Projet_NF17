@@ -19,13 +19,19 @@
 			GROUP BY Route.nom, Route.type -- pour afficher le nombre de livraison par route
 			";
 	$result=pg_query($vConn,$query);
-	echo"<table><tr><th><center>Route</a></center></th><th><center>Etat de la route</center></th><th><center>Nombre de clients à livrer</center></th></tr>";
+	echo"<table><tr>
+			<th><center>Route</a></center></th>
+			<th><center>Etat de la route</center></th>
+			<th><center>Nombre de clients à livrer</center></th>
+			</tr>";
 	//boucle de lecture
 	while ($array = pg_fetch_array($result)) {
-	
-	echo"<tr><td>".$array['type']." ".$array['nom']."</td><td>".$array['etat']."</td>";
-	echo"<td><center><a href='page_route.php?nom=".$array['nom']."&type=".$array['type']."'>$array[nb_client]</a></center></td>";//lien de redirectin en get vers la page client.php
-	echo"</tr>";
+		echo"<tr>
+			<td>".$array['type']." ".$array['nom']."</td>
+			<td>".$array['etat']."</td>";
+		echo"<td><center><a href='page_route.php?nom=".$array['nom']."&type=".$array['type']."'>$array[nb_client]</a></center></td>";
+		//lien de redirection en get vers la page client.php
+		echo"</tr>";
 	}
 echo"</table>";
 

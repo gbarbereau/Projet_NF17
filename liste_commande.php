@@ -14,11 +14,8 @@ echo "<h1>consultation des livraisons a effectuer</h1><br>";
 
 if(!empty($_POST['validation']))
 {
-
-
 	if ($_POST['validation']=="consulter livraisons du jour") 
 	{
-
 		$vQuery = "SELECT C.num_client AS cli , C.nom AS nom , C.prenom AS pre, SUM(M.prix) AS prix_total, L.heure_poss AS har
 		FROM Client C, Marchandise M, Livraison L
 		WHERE C.num_client=M.num_client
@@ -29,10 +26,16 @@ if(!empty($_POST['validation']))
 		";
 
 		$vResult = pg_query($vConn,$vQuery);
-		
 		$vInc=0;
 		echo "<table border='1' class='table' style='width:100%'>";
-		echo "<tr><th> </th><th>ID Client</th><th>nom Client</th><th>Prenom Client</th><th>Prix Total</th><th>cliquez pour consulter</th></tr><br>";
+		echo "<tr>
+			<th></th>
+			<th>ID Client</th>
+			<th>nom Client</th>
+			<th>Prenom Client</th>
+			<th>Prix Total</th>
+			<th>cliquez pour consulter</th>
+			</tr><br>";
 		while ($vRow = pg_fetch_array($vResult, null, PGSQL_ASSOC))
 		{
 			$vInc= $vInc+1;
@@ -54,14 +57,14 @@ if(!empty($_POST['validation']))
 
 
 	if (!empty($_POST['refresh'])) {
-		header("Refersh:0");
+		header("Refersh:0");//A vérifier ?
 	}
 
 	$vTri = $_POST['tri'];
 
 	if ($vTri=="jour") {
 
-		echo "<h3>livraisons triees par jour</h3>";
+		echo "<h3>Livraisons triées par jour</h3><br/>";
 
 
 		$vQuery = "SELECT L.date_poss AS dar, C.num_client AS cli, C.nom AS nom, C.prenom AS pre, SUM(M.prix) AS prix_total
@@ -158,14 +161,14 @@ if(!empty($_POST['validation']))
 		}
 		echo "</table><br>";
 	}
+	
 	echo " <br><br><form action='liste_commande.php'  method='POST'>";
 	echo '<input type="submit" value="retour arriere" name="refresh"><br><br><br>';
 	echo "</form><br>";
 
 
 
-}
-else
+}else
 {
 
 	echo "<h3>Livraisons a effectuer ajourd'hui</h3><br>";

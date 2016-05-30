@@ -14,10 +14,10 @@
 	echo "<table border='1' cellspacing='0' >";
 	echo "<tr><th>Identifiant</th><th>Denomination</th></tr>";
 	  while ($vResult = pg_fetch_array($vQuery, null, PGSQL_ASSOC)) {
-    echo "<tr>";
-    echo "<td>$vResult[identifiant]</td>";
-    echo "<td> $vResult[denomination]</td><br/>";
-    echo "</tr>";
+      echo "<tr>";
+      echo "<td>$vResult[identifiant]</td>";
+      echo "<td> $vResult[denomination]</td><br/>";
+      echo "</tr>";
   }
   	echo "</table></center>";
 

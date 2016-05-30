@@ -15,8 +15,10 @@
 	$vSql="INSERT INTO Marchandise (identifiant, denomination, prix, stock, num_client) VALUES ('$vIdentifiant', '$vDenomination','$vPrix', '$vStock','$vNum')";
 	$vQuery=pg_query($vConn,$vSql);
 
-	if($vQuery)echo"<h2>Enregistrement de la nouvelle marchandise $vDenomination bien effectué.</h2>";
-	else echo"Mauvaise saisie";
+	if($vQuery)
+		echo"<h2>Enregistrement de la nouvelle marchandise $vDenomination bien effectué.</h2>";
+	else
+		echo"Mauvaise saisie";
 ?>
 </body>
 </html>
