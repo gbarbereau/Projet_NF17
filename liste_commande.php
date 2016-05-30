@@ -177,15 +177,14 @@ else
 	GROUP BY M.identifiant;
 	";
 
+	$vNbLiv=0;
 	$vResult = pg_query($vConn,$vQuery);
 	while ($vRow = pg_fetch_array($vResult, null, PGSQL_ASSOC))
 	{
-		echo " PUTAIN ! $vRow[NbLiv] LA !<br>";
+		echo " alors ? $vRow[NbLiv] ? <br>";
 		$vNbLiv=$vRow[NbLiv];
-
-		
 	}
-	if ($vNbLiv=="lol")
+	if ($vNbLiv==0)
 	{
 		echo "<br>pas de commandes a livrer aujourd'hui =) <br><br><br>";
 	}
@@ -198,6 +197,7 @@ else
 		</form>';
 	}
 
+	echo "<h3>Triez les livraisons</h3><br>";
 
 
 	echo '<form action="liste_commande.php"  method="POST">
