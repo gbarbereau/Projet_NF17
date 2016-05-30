@@ -48,6 +48,7 @@
 			else
 				echo"Arrivée prévu le: $array3[date_poss]";
 
+
 			echo"</td></tr>";
 
 

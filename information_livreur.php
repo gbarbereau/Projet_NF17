@@ -22,6 +22,7 @@
 	echo"<option value=$array[ID_J] >$array[ID_J] $array[type]</option>";
 	}
 	echo"</select> Dsl on a pas mis de nom au jonctions mais c'est pas ma faute tu comprend... #UML de merde";
+	echo"<input type=submit />";
 	echo"</form>";
 
 	?>
