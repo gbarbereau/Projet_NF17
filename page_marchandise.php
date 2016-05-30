@@ -20,8 +20,8 @@
 	echo"<table><tr><th><center>Produit</a></center></th><th><center>Prix</center></th>><th><center>Stock Restant</center></th></tr>";
 	//boucle de lecture
 	while ($array = pg_fetch_array($result)) {
-	echo"<tr><td>$array[Marchandise.denomination]</td><td>$array[Marchandise.prix]</td>";
-	echo"<td>$array[Marchandise.stock]</td>";
+	echo"<tr><td>".$array['Marchandise.denomination']."</td><td>".$array['Marchandise.prix']."</td>";
+	echo"<td>."$array['Marchandise.stock']."</td>";
 	echo"</tr>";
 	}
 echo"</table>";

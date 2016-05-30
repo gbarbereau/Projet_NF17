@@ -41,12 +41,13 @@ echo"<center><h1> Page de $array[nom] $array[prenom]</h1><br/>";
 			exit;
 		} else {
 			echo"<table border='1px solid red' ><tr><th>ID commande</th><th>Marchandise</th><th>Prix</th><th>Date Arrivée</th></tr>";
+			echo"<tr><td>$array3[identifiant]</td><td>$array3[denomination]</td><td>$array3[prix]</td><td>";
 			while ($array3 = pg_fetch_array($result3)){
 		
 		
-				echo"<table><tr><td>$array3[identifiant]</td><td>$array3[denomination]</td><td>$array3[prix]</td><td>";
-				if ($array3['date_arri']<$date) echo"$array3[date_arri]";
-				else echo"arrivé prévu le: $array3[date_poss]";
+				echo"<tr><td>$array3[identifiant]</td><td>$array3[denomination]</td><td>$array3[prix]</td><td>";
+				if ($array3['date_arri']=='') echo"Arrivé prévu le: ".$array3['date_poss'];
+				else echo"$array3[date_arri]";
 
 				echo"</td></tr>";
 
