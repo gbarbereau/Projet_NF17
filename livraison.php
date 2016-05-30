@@ -39,12 +39,12 @@ switch ($_POST['form']) {
 		{
 			
 			echo "
-			<h4>info client</h4>
-			<b>identifiant client:</b> $vRow[idcli] <br>
-			<b>nom:</b> $vRow[nom]	<br>
-			<b>prenom:</b> $vRow[pre]	<br>
-			<b>email:</b> $vRow[email]	<br>
-			<b>tel:</b> $vRow[tel]	<br>
+			<h4>Informations client</h4>
+			<b>Identifiant client :</b> $vRow[idcli] <br>
+			<b>Nom :</b> $vRow[nom]	<br>
+			<b>Prénom :</b> $vRow[pre]	<br>
+			<b>E-mail :</b> $vRow[email]	<br>
+			<b>Téléphone :</b> $vRow[tel]	<br>
 			";
 		}
 		

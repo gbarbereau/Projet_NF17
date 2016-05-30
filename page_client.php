@@ -1,21 +1,21 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="utf-8"/>
+	<meta charset="utf-8"/>
 
 </head>
 
 <body>
-<?php
+	<?php
 	date_default_timezone_set('Europe/Paris');
-		$date = date("Y/m/j");
-		
+	$date = date("Y/m/j");
+
 	$ID_client=$_GET['ID'];
 	include("connexion.php");
 	$query="SELECT num_client,nom,prenom,email,telephone FROM Client WHERE num_client=$ID_client ";
 	$result=pg_query($vConn,$query);
 	$array = pg_fetch_array($result);
-echo"<center><h1> Page de $array[nom] $array[prenom]</h1><br/>";
+	echo"<center><h1> Page de $array[nom] $array[prenom]</h1><br/>";
 	
 	
 	echo"<table><tr><th>ID :</th><td> $array[num_client]</td></tr>
@@ -28,7 +28,7 @@ echo"<center><h1> Page de $array[nom] $array[prenom]</h1><br/>";
 	$result2=pg_query($vConn,$query2);
 	$array2 = pg_fetch_array($result2);
 
-	echo"<tr><th>Adresse :</th><td>$array2[num_rue] $array2[type_route] $array2[nom_rue], batiment $array2[num_bat], appartement $array2[num_appart] </td></tr>";// affichage adresse
+	echo"<tr><th>Adresse :</th><td>$array2[num_rue] $array2[type_route] $array2[nom_route], Batiment n° $array2[num_bat], Étage n° $array[num_etage] App n° $array2[num_appart] </td></tr><br>";// affichage adresse
 	echo"</table>";
 	//requete pour les livraisons
 
@@ -37,24 +37,25 @@ echo"<center><h1> Page de $array[nom] $array[prenom]</h1><br/>";
 	echo"Historiques des commandes du client:<br/>"."\n";
 	$array3 = pg_fetch_array($result3);
 	if (empty($array3)){
-			echo "Le client n'as jamais rien commandé";
-			exit;
-		} else {
-			echo"<table border='1px solid red' ><tr><th>ID commande</th><th>Marchandise</th><th>Prix</th><th>Date Arrivée</th></tr>";
-			while ($array3 = pg_fetch_array($result3)){
-		
-		
-				echo"<table><tr><td>$array3[identifiant]</td><td>$array3[denomination]</td><td>$array3[prix]</td><td>";
-				if ($array3['date_arri']<$date) echo"$array3[date_arri]";
-				else echo"arrivé prévu le: $array3[date_poss]";
-
-				echo"</td></tr>";
+		echo "Le client n'a jamais rien commandé";
+		exit;
+	} else {
+		echo"<table border='1px solid red' ><tr><th>ID commande</th><th>Marchandise</th><th>Prix</th><th>Date Arrivée</th></tr>";
+		while ($array3 = pg_fetch_array($result3)){
+			echo"<table><tr><td>$array3[identifiant]</td><td>$array3[denomination]</td><td>$array3[prix]</td><td>";
+			if ($array3[date_arri]<$date)
+				echo"$array3[date_arri]";
+			else
+				echo"Arrivée prévu le: $array3[date_poss]";
 
 
-			} 
-			echo"</table>";
+			echo"</td></tr>";
+
+
+		} 
+		echo"</table>";
 		
-		}
+	}
 	
 
 

@@ -3,8 +3,6 @@
 <title>Creation client</title>
 </head>
 <body>
-	Bienvenue sur la page de creation de client !
-
 
 
 <?php
@@ -24,7 +22,8 @@
 	pg_close($vConn);
 
 	?>
-
+		<br/>
+		<a href='index.html'>Retour accueil</a>
 
 </body>
 </html>
