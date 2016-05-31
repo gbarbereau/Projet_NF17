@@ -10,8 +10,6 @@ echo "<center>";
 echo "<h1>consultation des livraisons a effectuer</h1><br>";
 
 
-
-
 if(!empty($_POST['validation']))
 {
 	if ($_POST['validation']=="consulter livraisons du jour") 
@@ -20,7 +18,7 @@ if(!empty($_POST['validation']))
 		FROM Client C, Marchandise M, Livraison L
 		WHERE C.num_client=M.num_client
 		AND L.num_client=M.num_client
-		AND L.date_poss='NOW()'
+		AND L.date_poss=CURRENT_DATE
 		GROUP BY C.num_client,L.heure_poss
 		ORDER BY L.heure_poss, C.num_client;
 		";
@@ -43,10 +41,9 @@ if(!empty($_POST['validation']))
 			<td>
 				<form action='livraison.php' method='POST'>
 					<input type='hidden'  name='idc' value=$vRow[cli]>
-					<input type='hidden'  name='dar' value=$vRow[dar]>
 					<input type='hidden'  name='har' value=$vRow[har]>
 					<input type='hidden'  name='PT' value=$vRow[prix_total]>
-					<input type='hidden'  name='form' value='base'>
+					<input type='hidden'  name='form' value='parjour'>
 					</option><input type='submit' value='consulter' name='sub'>
 				</form>
 			</td>
@@ -57,7 +54,7 @@ if(!empty($_POST['validation']))
 
 
 	if (!empty($_POST['refresh'])) {
-		header("Refersh:0");//A vérifier ?
+		header("Refresh:0");
 	}
 
 	$vTri = $_POST['tri'];
@@ -183,14 +180,12 @@ if(!empty($_POST['validation']))
 	$vResult = pg_query($vConn,$vQuery);
 	if (pg_num_rows($vResult)==0)
 		echo "<br>pas de commandes a livrer aujourd'hui =) <br><br><br>";
-	else{
+	else
+	{
 		while ($vRow = pg_fetch_array($vResult))
-			{
-				echo " alors ?";
-				echo $vRow[NbLiv];
-				echo "<br/>";
-				$vNbLiv=$vRow[NbLiv];
-			}
+		{
+			$vNbLiv=$vRow[NbLiv];
+		}
 	
 		echo "<br>nombre de livraisons a effectuer aujourd'hui: $vNbLiv <br><br>";
 		echo '<form action="liste_commande.php"  method="POST">
@@ -212,7 +207,7 @@ if(!empty($_POST['validation']))
 		<input type="submit" value="consulter" name="validation"><br><br><br>
 		</form>';
 	
-	}
+
 	echo "<h3>affichage de base:</h3><br>";
 
 	$vQuery = "SELECT C.num_client AS cli , C.nom AS nom , C.prenom AS pre, SUM(M.prix) AS prix_total, L.date_poss AS dar, L.heure_poss AS har
@@ -246,7 +241,7 @@ if(!empty($_POST['validation']))
 	}
 	echo "</table><br>";
 
-
+}
 pg_close($vConn);
 
 echo "</center>";
