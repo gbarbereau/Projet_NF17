@@ -28,7 +28,7 @@ echo"<center><h1> Page de $array[nom] $array[prenom]</h1><br/>";
 	$result2=pg_query($vConn,$query2);
 	$array2 = pg_fetch_array($result2);
 
-	echo"<tr><th>Adresse :</th><td>$array2[num_rue] $array2[type_route] $array2[nom_rue], batiment $array2[num_bat], appartement $array2[num_appart] </td></tr>";// affichage adresse
+	echo"<tr><th>Adresse :</th><td>$array2[num_rue] $array2[type_route] $array2[nom_route], batiment $array2[num_bat], etage $array2[num_etage] appartement $array2[num_appart] </td></tr>";// affichage adresse
 	echo"</table>";
 	//requete pour les livraisons
 
@@ -37,7 +37,7 @@ echo"<center><h1> Page de $array[nom] $array[prenom]</h1><br/>";
 	echo"Historiques des commandes du client:<br/>"."\n";
 	$array3 = pg_fetch_array($result3);
 	if (empty($array3)){
-			echo "Le client n'as jamais rien commandé";
+			echo "Le client n'a jamais rien commandé";
 			exit;
 		} else {
 			echo"<table border='1px solid red' ><tr><th>ID commande</th><th>Marchandise</th><th>Prix</th><th>Date Arrivée</th></tr>";

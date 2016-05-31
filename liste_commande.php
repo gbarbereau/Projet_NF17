@@ -171,7 +171,7 @@ if(!empty($_POST['validation']))
 }else
 {
 
-	echo "<h3>Livraisons a effectuer ajourd'hui</h3><br>";
+	echo "<h3>Livraisons à effectuer aujourd'hui</h3><br>";
 
 	$vQuery = "SELECT M.identifiant AS idm, COUNT(M.identifiant) AS NbLiv
 	FROM Marchandise M, Livraison L
@@ -187,7 +187,7 @@ if(!empty($_POST['validation']))
 		while ($vRow = pg_fetch_array($vResult))
 			{
 				echo " alors ?";
-				echo $vRow[0];
+				echo $vRow[NbLiv];
 				echo "<br/>";
 				$vNbLiv=$vRow[NbLiv];
 			}
