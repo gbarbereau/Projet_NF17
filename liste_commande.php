@@ -1,3 +1,4 @@
+
 <html>
 <head>
 </head>
@@ -19,6 +20,7 @@ if(!empty($_POST['validation']))
 		WHERE C.num_client=M.num_client
 		AND L.num_client=M.num_client
 		AND L.date_poss=CURRENT_DATE
+		AND M.date_arri IS NULL
 		GROUP BY C.num_client,L.heure_poss
 		ORDER BY L.heure_poss, C.num_client;
 		";
@@ -68,6 +70,7 @@ if(!empty($_POST['validation']))
 		FROM Client C, Marchandise M, Livraison L
 		WHERE C.num_client=M.num_client
 		AND L.num_client=M.num_client
+		AND M.date_arri IS NULL
 		GROUP BY L.date_poss, C.num_client
 		ORDER BY L.date_poss, C.num_client;
 		";
@@ -102,6 +105,7 @@ if(!empty($_POST['validation']))
 		$vQuery = "SELECT C.num_client AS cli , C.nom AS nom , C.prenom AS pre, SUM(M.prix) AS prix_total
 		FROM Client C, Marchandise M
 		WHERE C.num_client=M.num_client
+		AND M.date_arri IS NULL
 		GROUP BY C.num_client
 		ORDER BY C.num_client;
 		";
@@ -135,6 +139,7 @@ if(!empty($_POST['validation']))
 		$vQuery = "SELECT M.identifiant AS idm, M.denomination AS denom, COUNT(C.num_client) AS nb_demandeurs
 		FROM Client C, Marchandise M
 		WHERE C.num_client=M.num_client
+		AND M.date_arri IS NULL
 		GROUP BY M.identifiant
 		ORDER BY M.identifiant;
 		";
@@ -173,6 +178,7 @@ if(!empty($_POST['validation']))
 	$vQuery = "SELECT M.identifiant AS idm, COUNT(M.identifiant) AS NbLiv
 	FROM Marchandise M, Livraison L
 	WHERE L.num_client=M.num_client
+	AND M.date_arri IS NULL
 	AND L.date_poss=CURRENT_DATE
 	GROUP BY M.identifiant";
 
@@ -214,6 +220,7 @@ if(!empty($_POST['validation']))
 	FROM Client C, Marchandise M, Livraison L
 	WHERE C.num_client=M.num_client
 	AND L.num_client=M.num_client
+	AND M.date_arri IS NULL
 	GROUP BY C.num_client, L.date_poss, L.heure_poss
 	ORDER BY L.date_poss, L.heure_poss, C.num_client;
 	";
