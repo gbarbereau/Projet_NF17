@@ -17,6 +17,7 @@
 			INNER JOIN Marchandise ON Client.num_client=Marchandise.num_client --On choppe les commande
 			WHERE Marchandise.date_arri IS NULL --commande en attente de livraison
 			GROUP BY Route.nom, Route.type -- pour afficher le nombre de livraison par route
+			ORDER By nb_client DESC
 			";
 	$result=pg_query($vConn,$query);
 	echo"<table><tr><th><center>Route</a></center></th><th><center>Etat de la route</center></th><th><center>Nombre de clients à livrer</center></th></tr>";
