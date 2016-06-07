@@ -64,7 +64,16 @@ INSERT INTO Livraison VALUES ('214242','14/06/2016','17');
 INSERT INTO Livraison VALUES ('214141','14/06/2016','10');
 INSERT INTO Livraison VALUES ('210000','14/06/2016','11');
 
+INSERT INTO type_jonction VALUES ('Rond-point');
+INSERT INTO type_jonction VALUES ('Carrefour');
+INSERT INTO type_jonction VALUES ('Intersection');
 
+INSERT INTO jonction VALUES ('1','Rond-point');
+INSERT INTO jonction VALUES ('2','Carrefour');
+INSERT INTO jonction VALUES ('3','Intersection');
+
+INSERT INTO Liaison VALUES ('Colonel Sutterlin', 'Boulevard','3');
+INSERT INTO Liaison VALUES ('de Flandre', 'Avenue','2');
 
 /* ------------------------------------------------------------------------------------------------------------ */
 
