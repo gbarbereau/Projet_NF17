@@ -11,7 +11,7 @@
 	$vDenomination=$_POST['den'];
 	$vPrix=$_POST['prix'];
 	$vStock=$_POST['stock'];
-	$vNum=$_POST['numclient'];
+	$vNum=$_POST['num_client'];
 	$vSql="INSERT INTO Marchandise (identifiant, denomination, prix, stock, num_client) VALUES ('$vIdentifiant', '$vDenomination','$vPrix', '$vStock','$vNum')";
 	$vQuery=pg_query($vConn,$vSql);
 
