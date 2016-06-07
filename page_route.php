@@ -41,7 +41,7 @@ echo"</table>";
 	$query="SELECT Nom,Type FROM Route ORDER BY TYPE";
 	$result=pg_query($vConn,$query);
 ?>
-	<SELECT>
+	<SELECT name="route">
 <?php
 	while($parcours = $pg_fetch_array($result)){
 		echo "<OPTION>";
