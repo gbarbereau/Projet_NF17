@@ -12,16 +12,18 @@
 	include("connexion.php");
 	echo"<form method=POST action='result_livreur.php'>";
 	echo"A quelle intersection êtes vous positionné?";
-	echo"<select name='jonction'>";
+	
 	$query="SELECT * FROM Jonction 
 			INNER JOIN type_jonction ON Jonction.type=type_jonction.typeJ
 			
 			 ";
 	$result=pg_query($vConn,$query);
+	echo"<select name='jonction'>";
 	while ($array = pg_fetch_array($result)) {
-	echo"<option value=$array[ID_J] >$array[ID_J] $array[type]</option>";
+		
+	echo"<option value=$array[id_j] >ID:$array[id_j] $array[type]</option>";
 	}
-	echo"</select> Dsl on a pas mis de nom au jonctions mais c'est pas ma faute tu comprend... #UML de merde";
+	echo"</select> ";
 	echo"<input type=submit />";
 	echo"</form>";
 
