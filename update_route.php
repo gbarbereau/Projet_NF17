@@ -19,7 +19,7 @@
 		$query="UPDATE ROUTE SET Etat='$etat' WHERE Nom='$nom_r' AND Type='$type_r'";
 	$result=pg_query($vConn,$query);
 ?>
-
+	<a href='information_route.php'> Retour à l'accueil</a>
 </center>
 </body>
 
