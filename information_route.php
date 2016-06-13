@@ -31,7 +31,40 @@
 echo"</table>";
 
 	?>
-
+	<br/>
+	<br/>
+	Voulez-vous changer l'état d'une route ?
+<?php
+	include("connexion.php");
+	$query="SELECT Nom,Type FROM Route ORDER BY TYPE";
+	$result=pg_query($vConn,$query);
+?>
+	<SELECT name="route">
+<?php
+	while($parcours = $pg_fetch_array($result)){
+		echo '<OPTION>',$parcours[1],' ',$parcours[0],'</OPTION>';
+	}
+?>
+<form action='update_route.php' method='POST'>
+	Choisissez la route : 
+	</SELECT name="etat">
+<?php
+	include("connexion.php");
+	$query="SELECT ETAT FROM ETAT_R";
+	$result=pg_query($vConn,$query);
+?>
+	Etat de la route :
+	<SELECT>
+<?php
+	while($parcours = $pg_fetch_array($result)){
+		echo "<OPTION>";
+		echo $parcours[ETAT];
+		echo "</OPTION>";
+	}
+?>
+	</SELECT>
+</option><input type='submit' value='Envoyer' name='send'>
+</form>
 
 </center>
 </body>
